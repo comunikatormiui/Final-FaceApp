@@ -3,32 +3,63 @@ $(document).ready(() => {
   $('.btn-primary').on('click', (event) => {
     event.preventDefault()
 
-    const source1 = $('input#one').val()
-    const source2 = $('input#two').val()
+    const file1 = $('input#inputone').get(0).files[0]
+    const file2 = $('input#inputtwo').get(0).files[0]
 
-    if (source1) {
-      $('img#one').replaceWith( `<img src='${source1}' id="one"/>`)
-    } else {
-      const file1 = $('input#inputone').get(0).files[0]
-      if (file1) {
-        $('div.imgareaselect-outer').remove()
-        $('section').next().remove()
-        showImage(file1, "one")
-      }
+    if (file1) {
+      $('div.imgareaselect-outer').remove()
+      $('section').next().remove()
+      showImage(file1, "one")
     }
 
-    if (source2) {
-      $('img#two').replaceWith(`<img src='${source2}' id="two"/>`)
-    } else {
-      const file2 = $('input#inputtwo').get(0).files[0]
-      if (file2) {
-        $('div.imgareaselect-outer').remove()
-        $('section').next().remove()
-        showImage(file2, "two")
-      }
+    if (file2) {
+      $('div.imgareaselect-outer').remove()
+      $('section').next().remove()
+      showImage(file2, "two")
     }
   })
+
+  $('#create').on('click', (event) => {
+    const c = document.getElementById("myCanvas");
+    const ctx = c.getContext("2d");
+
+    const img1 =  document.getElementById("one");
+    // const img2 = document.getElementById("two")
+    //
+    c.setAttribute('width', img1.width)
+    c.setAttribute('height', img1.height)
+    //
+    const one = $('img#one').imgAreaSelect({ instance: true })
+    const select1 = one.getSelection()
+
+    const two = $('img#two').imgAreaSelect({ instance: true })
+    const select2 = two.getSelection()
+    //
+    ctx.drawImage(img1, 0, 0);
+
+    var img2 = new Image();
+    img2.onload = function () {
+        roundedImage(ctx, select1.x1, select1.y1, select1.width, select1.height, select1.width/2);
+        ctx.clip();
+        ctx.drawImage(img2, select2.x1, select2.y1, select2.width, select2.height, select1.x1, select1.y1, select1.width, select1.height);
+    }
+    img2.src = $('img#two').attr('src');
+  })
 })
+
+const roundedImage = (ctx, x, y, width, height, radius) => {
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+}
 
 const showImage = (file, id) => {
   var img = document.createElement("img");
@@ -41,21 +72,19 @@ const showImage = (file, id) => {
   reader.onload = ((aImg) => {
     return (e) => {
       aImg.src = e.target.result;
-      aImg.onload = (() => {
-        aImg.width = (aImg.width * 0.5)
-      })
     };
   })(img);
   reader.onloadend = processFile;
   reader.readAsDataURL(file);
+
 }
 
-function processFile (event) {
+const processFile = (event) => {
   var content = event.target.result;
   sendFileToCloudVision(content.replace('data:image/jpeg;base64,', ''));
 }
 
-function sendFileToCloudVision (content) {
+const sendFileToCloudVision = (content) => {
   var request = {
     requests: [{
       image: {
@@ -77,18 +106,18 @@ function sendFileToCloudVision (content) {
   }).done(showFaces);
 }
 
-function showFaces (data) {
+const showFaces = (data) => {
   const contents = JSON.stringify(data, null, 4);
   const face = data.responses[0].faceAnnotations[0].boundingPoly.vertices
   const faceParameters = {
-    x1: face[0].x * 0.5,
-    y1: face[0].y * 0.5,
-    x2: face[2].x * 0.5,
-    y2: face[2].y * 0.5,
+    x1: face[0].x,
+    y1: face[0].y,
+    x2: face[2].x,
+    y2: face[2].y,
     persistent: true,
     handles: "corners"
   }
-  
+
   if ($('input#inputone').get(0).files[0]) {
     $('img#one').imgAreaSelect(faceParameters)
   }
