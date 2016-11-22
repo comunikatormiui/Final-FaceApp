@@ -6,17 +6,20 @@ const favicon      = require('serve-favicon');
 const logger       = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser   = require('body-parser');
+const ENV          = process.env.ENV || "development";
 
 
 // require database
 const knexConfig = require("./knexfile");
 const knex       = require("knex")(knexConfig[ENV]);
 const knexLogger = require('knex-logger');
+const morgan     = require('morgan');
 
 //require routes
 const index           = require('./routes/index');
 const usersRoutes     = require('./routes/users');
-const new_imageRoutes = require('./routes/new_image')
+const new_imageRoutes = require('./routes/new_image');
+
 
 const app = express();
 
@@ -26,8 +29,9 @@ app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(knexLogger(knex));
 
+app.use(morgan('dev'))
+app.use(knexLogger(knex));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -65,3 +69,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
