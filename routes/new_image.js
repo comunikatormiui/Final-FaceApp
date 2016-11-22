@@ -13,6 +13,9 @@ const gcs = storage({
 const bucket = gcs.bucket('faceimages');
 
 /* GET new_image listing. */
+
+module.exports = (knex) => {
+
 router.get('/', function(req, res, next) {
   res.render('new_image', {title: "Face App"});
 });
@@ -28,4 +31,6 @@ router.post('/', function (req, res, next){
 
 });
 
-module.exports = router;
+
+return router;
+}
