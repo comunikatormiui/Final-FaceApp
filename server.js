@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', usersRoutes);
-app.use('/users/:id/new_image', new_imageRoutes);
+app.use('/images/new', new_imageRoutes);
 
 
 app.listen(3000, function () {

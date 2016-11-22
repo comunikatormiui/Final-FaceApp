@@ -24,28 +24,40 @@ $(document).ready(() => {
     const ctx = c.getContext("2d");
 
     const img1 =  document.getElementById("one");
-    // const img2 = document.getElementById("two")
-    //
+
     c.setAttribute('width', img1.width)
     c.setAttribute('height', img1.height)
-    //
+
     const one = $('img#one').imgAreaSelect({ instance: true })
     const select1 = one.getSelection()
 
     const two = $('img#two').imgAreaSelect({ instance: true })
     const select2 = two.getSelection()
-    //
-    ctx.drawImage(img1, 0, 0);
+    console.log(select2)
 
-    var img2 = new Image();
+    ctx.drawImage(img1, 0, 0, img1.width, img1.height);
+
+    const img2 = new Image();
+    const ratio2 = $('img#two').width() / $('img#two').attr('size')
     img2.onload = function () {
         roundedImage(ctx, select1.x1, select1.y1, select1.width, select1.height, select1.width/2);
         ctx.clip();
-        ctx.drawImage(img2, select2.x1, select2.y1, select2.width, select2.height, select1.x1, select1.y1, select1.width, select1.height);
+        ctx.drawImage(img2, select2.x1 / ratio2, select2.y1 / ratio2, select2.width / ratio2, select2.height / ratio2, select1.x1, select1.y1, select1.width, select1.height);
     }
     img2.src = $('img#two').attr('src');
   })
 })
+
+const setImgSize = (imgSrc, id) => {
+    const newImg = new Image();
+
+    newImg.onload = function() {
+      const width = newImg.width;
+      $(`img#${id}`).attr('size', width)
+    }
+
+    newImg.src = imgSrc;
+}
 
 const roundedImage = (ctx, x, y, width, height, radius) => {
     ctx.beginPath();
@@ -76,7 +88,6 @@ const showImage = (file, id) => {
   })(img);
   reader.onloadend = processFile;
   reader.readAsDataURL(file);
-
 }
 
 const processFile = (event) => {
@@ -103,26 +114,37 @@ const sendFileToCloudVision = (content) => {
     contentType: 'application/json'
   }).fail(function (jqXHR, textStatus, errorThrown) {
     $('#results').text('ERRORS: ' + textStatus + ' ' + errorThrown);
-  }).done(showFaces);
+  }).done(setImgSize($('img#one').attr('src'), 'one'), setImgSize($('img#two').attr('src'), 'two'), showFaces);
 }
 
 const showFaces = (data) => {
   const contents = JSON.stringify(data, null, 4);
+
+  const ratio1 = $('img#one').width() / $('img#one').attr('size')
+  const ratio2 = $('img#two').width() / $('img#two').attr('size')
+
   const face = data.responses[0].faceAnnotations[0].boundingPoly.vertices
-  const faceParameters = {
-    x1: face[0].x,
-    y1: face[0].y,
-    x2: face[2].x,
-    y2: face[2].y,
-    persistent: true,
-    handles: "corners"
-  }
+
 
   if ($('input#inputone').get(0).files[0]) {
-    $('img#one').imgAreaSelect(faceParameters)
+    $('img#one').imgAreaSelect({
+      x1: face[0].x * ratio1,
+      y1: face[0].y * ratio1,
+      x2: face[2].x * ratio1,
+      y2: face[2].y * ratio1,
+      persistent: true,
+      handles: "corners"
+    })
   }
 
   if ($('input#inputtwo').get(0).files[0]) {
-    $('img#two').imgAreaSelect(faceParameters)
+    $('img#two').imgAreaSelect({
+      x1: face[0].x * ratio2,
+      y1: face[0].y * ratio2,
+      x2: face[2].x * ratio2,
+      y2: face[2].y * ratio2,
+      persistent: true,
+      handles: "corners"
+    })
   }
 }

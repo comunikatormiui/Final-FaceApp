@@ -3,6 +3,9 @@
     <% include partials/_head %>
   <body>
     <% include partials/_header %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.imgareaselect.pack.js"></script>
     <section>
 
       <header class="page-header">
@@ -17,21 +20,27 @@
               <input type="file" id="inputone" />
             </div>
 
+            <div class="first">
+              <img id="one">
+            </div>
+          </form>
+          <form>
+
             <div class="form-group">
               <input type="file" id="inputtwo" />
             </div>
 
-            <input type="submit" class='btn btn-primary' value="Show Images" />
+            <div class="second">
+              <img id="two">
+            </div>
+
           </form>
-          <img id="one">
-          <img id="two">
-          <button id="create">Create</button>
         </div>
+        <button class='btn btn-primary'>Show Images</button>
+        <button id="create">Create</button>
       </div>
       <canvas id="myCanvas"></canvas>
     </section>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="/scripts/app.js"></script>
-    <script type="text/javascript" src="/scripts/jquery.imgareaselect.pack.js"></script>
+
   </body>
 </html>
