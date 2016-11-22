@@ -1,16 +1,21 @@
 "use strict";
 
-const express = require('express');
-const path = require('path');
-const favicon = require('serve-favicon');
-const logger = require('morgan');
+const express      = require('express');
+const path         = require('path');
+const favicon      = require('serve-favicon');
+const logger       = require('morgan');
 const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
+const bodyParser   = require('body-parser');
 
+
+// require database
+const knexConfig = require("./knexfile");
+const knex       = require("knex")(knexConfig[ENV]);
+const knexLogger = require('knex-logger');
 
 //require routes
-const index = require('./routes/index');
-const usersRoutes = require('./routes/users');
+const index           = require('./routes/index');
+const usersRoutes     = require('./routes/users');
 const new_imageRoutes = require('./routes/new_image')
 
 const app = express();
@@ -21,6 +26,8 @@ app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(knexLogger(knex));
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -29,9 +36,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-app.use('/', index);
-app.use('/users', usersRoutes);
-app.use('/users/:id/new_image', new_imageRoutes);
+app.use('/', index(knex));
+app.use('/users', usersRoutes(knex));
+app.use('/users/:id/new_image', new_imageRoutes(knex));
 
 
 app.listen(3000, function () {
