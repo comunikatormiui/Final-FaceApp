@@ -1,4 +1,3 @@
-
 exports.up = function(knex, Promise) {
 
   return Promise.all([
@@ -12,9 +11,7 @@ exports.up = function(knex, Promise) {
 
         knex.schema.createTable('photos', function(table){
             table.increments('id').primary();
-            table.integer('user_id')
-                 .references('id')
-                 .inTable('users');
+            table.integer('user_id');
             table.string('title');
             table.string('bucket_url');
             table.timestamps();
@@ -22,24 +19,16 @@ exports.up = function(knex, Promise) {
 
         knex.schema.createTable('comments', function(table){
             table.increments('id').primary();
-            table.integer('user_id')
-                 .references('id')
-                 .inTable('users');
-            table.integer('photo_id')
-                 .references('id')
-                 .inTable('photos');
+            table.integer('user_id');
+            table.integer('photo_id');
             table.string('content');
             table.dateTime('postDate');
         }),
 
         knex.schema.createTable('likes', function(table){
             table.increments('id').primary();
-            table.integer('user_id')
-                 .references('id')
-                 .inTable('users');
-            table.integer('photo_id')
-                 .references('id')
-                 .inTable('photos');
+            table.integer('user_id');
+            table.integer('photo_id');
         })
       ])
 };

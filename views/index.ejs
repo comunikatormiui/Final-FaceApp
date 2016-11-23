@@ -2,8 +2,19 @@
 <html>
     <% include partials/_head %>
   <body>
+
     <% include partials/_header %>
     <h1> Home Page </h1>
+    <section>
     <p> Images from all Users </p>
+
+
+        <div>
+          <% for(var i=0; i<data.length; i++) { %>
+          <div><img src="https://storage.googleapis.com/faceimages/<%=data[i]%>"></div>
+          <% } %>
+        </div>
+      </section>
+
   </body>
 </html>
