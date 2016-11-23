@@ -1,29 +1,28 @@
 'use strict'
 $(document).ready(() => {
-  $('.btn-primary').on('click', (event) => {
-    event.preventDefault()
-
+  $('#inputone').on('change', () => {
     const file1 = $('input#inputone').get(0).files[0]
+
+    $('img#one').imgAreaSelect({remove: true})
+    $('img#two').attr('changed', false)
+    showImage(file1, "one")
+  })
+
+  $('#inputtwo').on('change', () => {
     const file2 = $('input#inputtwo').get(0).files[0]
 
-    if (file1) {
-      $('div.imgareaselect-outer').remove()
-      $('section').next().remove()
-      showImage(file1, "one")
-    }
-
-    if (file2) {
-      $('div.imgareaselect-outer').remove()
-      $('section').next().remove()
-      showImage(file2, "two")
-    }
+    $('img#two').imgAreaSelect({remove: true})
+    $('img#one').attr('changed', false)
+    showImage(file2, "two")
   })
 
   $('#create').on('click', (event) => {
     const c = document.getElementById("myCanvas");
     const ctx = c.getContext("2d");
 
-    const img1 =  document.getElementById("one");
+    const img1 = new Image();
+
+    img1.src = $('img#one').attr('src')
 
     c.setAttribute('width', img1.width)
     c.setAttribute('height', img1.height)
@@ -33,7 +32,6 @@ $(document).ready(() => {
 
     const two = $('img#two').imgAreaSelect({ instance: true })
     const select2 = two.getSelection()
-    console.log(select2)
 
     ctx.drawImage(img1, 0, 0, img1.width, img1.height);
 
@@ -76,9 +74,11 @@ const roundedImage = (ctx, x, y, width, height, radius) => {
 const showImage = (file, id) => {
   var img = document.createElement("img");
   img.setAttribute('id', id)
+  img.setAttribute('changed', true)
   img.classList.add("obj");
+  img.classList.add("img-thumbnail")
   img.file = file;
-  $(`img#${id}`).replaceWith(img); // Assuming that "preview" is the div output where the content will be displayed.
+  $(`img#${id}`).replaceWith(img);
 
   var reader = new FileReader();
   reader.onload = ((aImg) => {
@@ -122,29 +122,49 @@ const showFaces = (data) => {
 
   const ratio1 = $('img#one').width() / $('img#one').attr('size')
   const ratio2 = $('img#two').width() / $('img#two').attr('size')
+  if (data.responses[0].faceAnnotations) {
+    const face = data.responses[0].faceAnnotations[0].boundingPoly.vertices
 
-  const face = data.responses[0].faceAnnotations[0].boundingPoly.vertices
+    if ($('img#one').attr('changed') === "true") {
+      $('img#one').imgAreaSelect({
+        x1: face[0].x * ratio1,
+        y1: face[0].y * ratio1,
+        x2: face[2].x * ratio1,
+        y2: face[2].y * ratio1,
+        persistent: true,
+        handles: "corners"
+      })
+    }
 
+    if ($('img#two').attr('changed') === "true") {
+      $('img#two').imgAreaSelect({
+        x1: face[0].x * ratio2,
+        y1: face[0].y * ratio2,
+        x2: face[2].x * ratio2,
+        y2: face[2].y * ratio2,
+        persistent: true,
+        handles: "corners"
+      })
+    }
+  } else {
+    if ($('img#one').attr('changed') === "true") {
+      $('img#one').imgAreaSelect({
+        x1: 0,
+        y1: 0,
+        x2: 100,
+        y2: 100,
+        persistent: true,
+        handles: "corners"})
+    }
 
-  if ($('input#inputone').get(0).files[0]) {
-    $('img#one').imgAreaSelect({
-      x1: face[0].x * ratio1,
-      y1: face[0].y * ratio1,
-      x2: face[2].x * ratio1,
-      y2: face[2].y * ratio1,
-      persistent: true,
-      handles: "corners"
-    })
-  }
-
-  if ($('input#inputtwo').get(0).files[0]) {
-    $('img#two').imgAreaSelect({
-      x1: face[0].x * ratio2,
-      y1: face[0].y * ratio2,
-      x2: face[2].x * ratio2,
-      y2: face[2].y * ratio2,
-      persistent: true,
-      handles: "corners"
-    })
+    if ($('img#two').attr('changed') === "true") {
+      $('img#two').imgAreaSelect({
+        x1: 0,
+        y1: 0,
+        x2: 100,
+        y2: 100,
+        persistent: true,
+        handles: "corners"})
+    }
   }
 }

@@ -1,24 +1,17 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
+.jumbotron {
+  margin-top: 75px;
 }
 
 img {
+  max-height: 25rem;
   max-width: 100%;
-  max-height: 100%;
-  vertical-align: middle;
+  vertical-align: top;
 }
 
-.first, .second {
-  line-height:300px;
-  display: inline-block;
+input[type=file] {
+    display: inline;
 }
 
-form {
-  width: 45%;
-  display: inline-block;
+body {
+  padding-bottom: 75px;
 }
