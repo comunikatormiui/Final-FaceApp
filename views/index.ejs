@@ -6,10 +6,13 @@
     <h1> Home Page </h1>
     <p> Images from all Users </p>
     <section>
-      <div>
-        <img src="https://storage.googleapis.com/faceimages/bolt.jpg" alt="no image">
-      </div>
-    </section>
+
+  <div>
+     <% for(var i=0; i<data.length; i++) { %>
+      <div><img src="https://storage.googleapis.com/faceimages/<%=data[i]%>"></div>
+    <% } %>
+  </div>
+</section>
 
   </body>
-  </html>
+</html>

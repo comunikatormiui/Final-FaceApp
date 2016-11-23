@@ -7,7 +7,7 @@ const gcloud = require('google-cloud')
 const storage = gcloud.storage;
 const gcs = storage({
   projectId: 'faceapp',
-  keyFilename: '/vagrant/bootcamp/final/final_time/faceapp-708537516d42.json'});
+  keyFilename: '/vagrant/bootcamp/final/final_time/faceapp_google_key.json'});
 
 // Reference an existing bucket.
 const bucket = gcs.bucket('faceimages');
