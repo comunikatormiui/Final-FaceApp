@@ -3,7 +3,21 @@
       <% include partials/_head %>
   <body>
       <% include partials/_header %>
-      <h1> User's Profile Page</h1>
-      <p> Images Created Below </p>
+
+
+      <h1>  <%= data[0].username %>'s Profile Page</h1>
+      <p> Images Created </p>
+
+
+
+           <div>
+          <% for(var i=0; i<data.length; i++) { %>
+          <div><p><%= data[i].title %></p>
+          <img src="<%= data[i].bucket_url %>"></div>
+          <% } %>
+        </div>
+
+
+
   </body>
 </html>
