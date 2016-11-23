@@ -41,7 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index(knex));
 app.use('/users', usersRoutes(knex));
-app.use('/images/new', new_imageRoutes(knex));
+app.use('/users/:id/new_image', new_imageRoutes(knex));
 
 
 app.listen(3000, function () {
