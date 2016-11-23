@@ -13,6 +13,8 @@ exports.seed = function(knex, Promise) {
                                username: '@matt',
                                email: 'matt@face.com',
                                password: 'matt'})
+
+
       ]);
     });
 };
