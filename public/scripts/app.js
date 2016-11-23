@@ -17,12 +17,12 @@ $(document).ready(() => {
   })
 
   $('#create').on('click', (event) => {
+
     const c = document.getElementById("myCanvas");
     const ctx = c.getContext("2d");
 
     const img1 = new Image();
-
-    img1.src = $('img#one').attr('src')
+    img1.src = $('img#one').attr('src');
 
     c.setAttribute('width', img1.width)
     c.setAttribute('height', img1.height)
@@ -36,11 +36,12 @@ $(document).ready(() => {
     ctx.drawImage(img1, 0, 0, img1.width, img1.height);
 
     const img2 = new Image();
+    const ratio1 = $('img#one').width() / $('img#one').attr('size')
     const ratio2 = $('img#two').width() / $('img#two').attr('size')
     img2.onload = function () {
-        roundedImage(ctx, select1.x1, select1.y1, select1.width, select1.height, select1.width/2);
+        roundedImage(ctx, select1.x1 / ratio1, select1.y1 / ratio1, select1.width / ratio1, select1.height / ratio1, (select1.width/ratio1)/2);
         ctx.clip();
-        ctx.drawImage(img2, select2.x1 / ratio2, select2.y1 / ratio2, select2.width / ratio2, select2.height / ratio2, select1.x1, select1.y1, select1.width, select1.height);
+        ctx.drawImage(img2, select2.x1 / ratio2, select2.y1 / ratio2, select2.width / ratio2, select2.height / ratio2, select1.x1 / ratio1, select1.y1 / ratio1, select1.width / ratio1, select1.height / ratio1);
     }
     img2.src = $('img#two').attr('src');
   })
