@@ -22,12 +22,10 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function (req, res, next){
 
-    // Upload a local file to a new file to be created in your bucket.
-    bucket.upload('/vagrant/bootcamp/final/images/obama.jpg', function(err, file) {
-      if (!err) {
-      }
-    console.log("Unable to upload image to bucket", err);
-    });
+    console.log("Post");
+    //console.log(req.body);
+
+
 
 });
 

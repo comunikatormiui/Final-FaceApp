@@ -33,15 +33,16 @@ app.set('view engine', 'ejs');
 app.use(morgan('dev'))
 app.use(knexLogger(knex));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit:'5mb'}));
+app.use(bodyParser.urlencoded({ extended: false, limit: '5mb' }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+
 app.use('/', index(knex));
 app.use('/users', usersRoutes(knex));
-app.use('/users/:id/new_image', new_imageRoutes(knex));
+app.use('/images/new', new_imageRoutes(knex));
 
 
 app.listen(3000, function () {
