@@ -1,9 +1,10 @@
 .img-thumbnail {
-  max-height: 35rem;
+  max-height: 40rem;
   max-width: 100%;
   vertical-align: top;
   padding: 0px;
   border: 0px;
+  margin-top: 15px;
 }
 
 input[type=file] {
@@ -13,4 +14,12 @@ input[type=file] {
 body {
   padding-bottom: 75px;
   padding-top: 75px;
+}
+
+#firstsize, #secondsize {
+  margin: 0 auto;
+}
+
+#firstpreview, #secondpreview, .replace {
+  display: inline-block;
 }
