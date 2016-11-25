@@ -19,6 +19,8 @@ const morgan     = require('morgan');
 const index           = require('./routes/index');
 const usersRoutes     = require('./routes/users');
 const new_imageRoutes = require('./routes/new_image');
+const registerRoutes  = require('./routes/register');
+const loginRoutes    = require('./routes/login')
 
 
 const app = express();
@@ -42,6 +44,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index(knex));
 app.use('/users', usersRoutes(knex));
 app.use('/users/:id/new_image', new_imageRoutes(knex));
+app.use('/register', registerRoutes(knex));
+app.use('/login', loginRoutes(knex));
 
 
 app.listen(3000, function () {
