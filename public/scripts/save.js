@@ -6,7 +6,6 @@ $(document).ready(() => {
         ctx = canvas.getContext('2d');
 
 
-    //let test = {id:1,name:'bob'};
 
     function downloadCanvas(link, canvasId, filename) {
         link.href = document.getElementById(canvasId).toDataURL();
@@ -18,7 +17,8 @@ $(document).ready(() => {
         $.ajax({
             url: 'http://localhost:3000/images/new',
             type: 'POST',
-            data: JSON.stringify(imageData),
+            data: imageData,
+            processData: false,
             success: function(){
             console.log('Image sent to Server :)');
           },error: function(){
@@ -27,18 +27,28 @@ $(document).ready(() => {
         });
       };
 
+    function getBase64Canvas() {
+        const dataURL = canvas.toDataURL("image/png");
+        //return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+        return dataURL;
+      }
+
 
 
 
       document.getElementById('download').addEventListener('click', function() {
           console.log("clicked download");
-            let dataURL = canvas.toDataURL();
-          //downloadCanvas(this, 'myCanvas', 'test.png');
-            console.log(dataURL);
-            sendImageData(dataURL);
+
+              //downloadCanvas(this, 'myCanvas', 'test.png');
+            console.log(getBase64Canvas());
+            sendImageData(getBase64Canvas());
 
 
       }, false);
 
 });
+
+
+
+
 

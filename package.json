@@ -9,6 +9,7 @@
     "knex": "./node_modules/.bin/knex"
   },
   "dependencies": {
+    "base64-arraybuffer": "^0.1.5",
     "body-parser": "~1.15.2",
     "canvas-to-image": "^1.1.4",
     "cookie-parser": "~1.4.3",
