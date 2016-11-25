@@ -5,6 +5,7 @@ const path         = require('path');
 const favicon      = require('serve-favicon');
 const logger       = require('morgan');
 const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
 const bodyParser   = require('body-parser');
 const ENV          = process.env.ENV || "development";
 
@@ -20,7 +21,9 @@ const index           = require('./routes/index');
 const usersRoutes     = require('./routes/users');
 const new_imageRoutes = require('./routes/new_image');
 const registerRoutes  = require('./routes/register');
-const loginRoutes    = require('./routes/login')
+const loginRoutes     = require('./routes/login');
+const logoutRoutes    = require('./routes/logout');
+
 
 
 const app = express();
@@ -39,13 +42,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2']
+}));
 
 
 app.use('/', index(knex));
 app.use('/users', usersRoutes(knex));
-app.use('/users/:id/new_image', new_imageRoutes(knex));
+app.use('/images/new', new_imageRoutes(knex));
 app.use('/register', registerRoutes(knex));
 app.use('/login', loginRoutes(knex));
+app.use('/logout', logoutRoutes(knex));
 
 
 app.listen(3000, function () {
