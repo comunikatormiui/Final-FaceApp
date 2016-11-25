@@ -54,16 +54,17 @@ module.exports = (knex) => {
 
       var request = {
         bucket: "faceimages",
+        predefinedAcl: "publicRead",
 
 
         resource: {
-              name: 'image_test',
-              mimeType: 'image/png',
+              name: 'botandobama.jpg',
+              mimeType: 'image/jpg',
         },
 
         media: {
           // See https://github.com/google/google-api-nodejs-client#media-uploads
-          mimeType: 'image/png',
+          mimeType: 'image/jpg',
           body: buf,
           base64encode: true
 
