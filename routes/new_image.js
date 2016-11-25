@@ -34,19 +34,11 @@ module.exports = (knex) => {
   router.post('/', function(req, res, next) {
     console.log("SendImagedata was clicked");
 
-    function first(obj) {
-      for (var a in obj) return a;
-      }
 
-    var imagebase64 = first(req.body);
-    var imagebase64equal = imagebase64 + '=';
+    console.log(req.body.imagedata64);
 
-
-    console.log(imagebase64equal);
-
-
-
-
+    var b64string = req.body.imagedata64;
+    var buf = Buffer.from(b64string, 'base64'); // Ta-da
 
 
     google.auth.getApplicationDefault(function(err, authClient) {
@@ -59,6 +51,7 @@ module.exports = (knex) => {
         authClient = authClient.createScoped(scopes);
       }
 
+
       var request = {
         bucket: "faceimages",
 
@@ -66,14 +59,13 @@ module.exports = (knex) => {
         resource: {
               name: 'image_test',
               mimeType: 'image/png',
-
         },
 
         media: {
           // See https://github.com/google/google-api-nodejs-client#media-uploads
           mimeType: 'image/png',
-          base64decode: true,
-          body: imagebase64
+          body: buf,
+          base64encode: true
 
         },
         // Auth client
@@ -90,23 +82,14 @@ module.exports = (knex) => {
     });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   });
 
 
   return router;
 }
+
+
+
+
+
+

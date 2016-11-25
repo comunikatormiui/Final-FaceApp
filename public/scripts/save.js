@@ -17,8 +17,8 @@ $(document).ready(() => {
         $.ajax({
             url: 'http://localhost:3000/images/new',
             type: 'POST',
-            data: imageData,
-            processData: false,
+            data: {'imagedata64':imageData},
+            processdata:false,
             success: function(){
             console.log('Image sent to Server :)');
           },error: function(){
@@ -29,8 +29,8 @@ $(document).ready(() => {
 
     function getBase64Canvas() {
         const dataURL = canvas.toDataURL("image/png");
-        //return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-        return dataURL;
+        return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+        //return dataURL;
       }
 
 
@@ -39,14 +39,15 @@ $(document).ready(() => {
       document.getElementById('download').addEventListener('click', function() {
           console.log("clicked download");
 
-              //downloadCanvas(this, 'myCanvas', 'test.png');
-            console.log(getBase64Canvas());
+            //downloadCanvas(this, 'myCanvas', 'test.png');
             sendImageData(getBase64Canvas());
 
 
       }, false);
 
 });
+
+
 
 
 
