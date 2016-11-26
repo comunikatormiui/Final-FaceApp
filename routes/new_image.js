@@ -35,7 +35,7 @@ module.exports = (knex) => {
     console.log("SendImagedata was clicked");
 
 
-    console.log(req.body.imagedata64);
+
 
     var b64string = req.body.imagedata64;
     var buf = Buffer.from(b64string, 'base64'); // Ta-da
