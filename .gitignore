@@ -1,2 +1,3 @@
 node_modules/
 faceapp_google_key.json
+.env
