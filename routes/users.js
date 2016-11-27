@@ -29,15 +29,6 @@ module.exports = (knex) => {
   //       })
   // });
 
-  router.get('/new', function(req, res, next) {
-    res.render('register')
-  })
-
-
-
-
-
-
 return router;
 
 }

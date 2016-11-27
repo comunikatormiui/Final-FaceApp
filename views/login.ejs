@@ -9,6 +9,10 @@
   <body>
     <% include partials/_nav %>
 
+    <% if (message.length > 0) { %>
+      <div class="alert alert-danger"><%= message %></div>
+    <% } %>
+
     <div class="container">
 
       <form class="form-signin" method="POST" action="/login">
@@ -18,7 +22,9 @@
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" password="password" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <h4>Don't have an account? <a href="/register">Sign up</a></h4>
       </form>
+
 
     </div> <!-- /container -->
 

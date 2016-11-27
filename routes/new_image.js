@@ -17,7 +17,16 @@ const bucket = gcs.bucket('faceimages');
 module.exports = (knex) => {
 
 router.get('/', function(req, res, next) {
-  res.render('new_image', {title: "Face App"});
+  const user = req.session.user_id
+  if (user) {
+    res.render('new_image', {
+      title: "Face App",
+      user: req.session.user_id
+    });
+  } else {
+    req.flash('loginMessage', 'Must be logged in to replace a face')
+    res.redirect('/login')
+  }
 });
 
 router.post('/', function (req, res, next){
