@@ -5,8 +5,9 @@ const path         = require('path');
 const favicon      = require('serve-favicon');
 const logger       = require('morgan');
 const cookieParser = require('cookie-parser');
-const cookieSession = require('cookie-session');
+const session = require('express-session');
 const bodyParser   = require('body-parser');
+const flash        = require('connect-flash');
 const ENV          = process.env.ENV || "development";
 
 
@@ -42,10 +43,11 @@ app.use(bodyParser.json({limit:'5mb'}));
 app.use(bodyParser.urlencoded({ extended: false, limit: '5mb' }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cookieSession({
-  name: 'session',
-  keys: ['key1', 'key2']
+app.use(session({
+  name: 'face_replace_cookie',
+  secret: 's$Uup3RSecre+M$22G'
 }));
+app.use(flash())
 
 
 
@@ -61,7 +63,6 @@ app.use('/images/new', new_imageRoutes(knex));
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 })
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

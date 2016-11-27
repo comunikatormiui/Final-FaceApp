@@ -8,20 +8,24 @@ const bcrypt = require('bcrypt-nodejs')
 module.exports = (knex) => {
 
   router.get('/', (req, res, next) => {
-    res.render('login')
+    res.render('login', {
+      user: req.session.user_id,
+      message: req.flash('loginMessage')
+    })
   })
 
   router.post('/', (req, res, next) => {
     knex
       .select('*')
       .from('users')
-      .where('email', '=', req.body.email)
+      .where('email', req.body.email)
       .then((results) => {
-        if (results) {
+        if (results[0] && bcrypt.compareSync(req.body.password, results[0].password)) {
           req.session.user_id = results[0].id;
           res.redirect('/')
         } else {
-          res.send("Incorrect username or password")
+          req.flash('loginMessage', 'Incorrect username or password')
+          return res.redirect('login')
         }
       })
   })

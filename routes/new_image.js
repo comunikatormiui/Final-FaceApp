@@ -25,11 +25,20 @@ const storage = google.storage('v1');
 
 module.exports = (knex) => {
 
-  router.get('/', function(req, res, next) {
+
+router.get('/', function(req, res, next) {
+  const user = req.session.user_id
+  if (user) {
     res.render('new_image', {
-      title: "Face App"
+      title: "Face App",
+      user: req.session.user_id
     });
-  });
+  } else {
+    req.flash('loginMessage', 'Must be logged in to replace a face')
+    res.redirect('/login')
+  }
+});
+
 
   router.post('/', function(req, res, next) {
     console.log("SendImagedata was clicked");

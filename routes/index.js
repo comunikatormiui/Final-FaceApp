@@ -14,7 +14,6 @@ module.exports = (knex) => {
 
 
   router.get('/', function(req, res, next) {
-    console.log("HOME PAGE");
 
     const get_bucket_promise = new Promise(function(resolve, reject) {
       google.auth.getApplicationDefault(function(err, authClient) {
@@ -61,7 +60,8 @@ module.exports = (knex) => {
         self_links.push(photo.name);
       });
        res.render('index', {
-        data: self_links
+        data: self_links,
+        user: req.session.user_id
       });
 
 

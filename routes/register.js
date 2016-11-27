@@ -7,24 +7,38 @@ const bcrypt = require('bcrypt-nodejs')
 module.exports = (knex) => {
 
   router.get('/', function(req, res, next) {
-    res.render('register')
+    res.render('register', {
+      user: req.session.user_id,
+      message: req.flash('registerMessage')
+    })
   })
 
   router.post('/', function(req, res, next) {
-    const name = req.body.username;
+    const username = req.body.username;
     const email = req.body.email;
     const password= bcrypt.hashSync(req.body.password);
 
-    knex('users')
-    .insert({
-      id: 3,
-      username: username,
-      email: email,
-      password: password
-    })
-    .return({inserted: true})
+    knex
+      .select('*')
+      .from('users')
+      .where('email', email)
+      .then((results) => {
+        if (!results[0]) {
+          knex('users')
+          .insert({
+            username: username,
+            email: email,
+            password: password
+          })
+          .return({inserted: true})
 
-    res.redirect('/login')
+          res.redirect('/')
+        } else {
+          req.flash('registerMessage', 'Email is invalid');
+          return res.redirect('/register')
+        }
+      })
+
   })
 
 return router;
