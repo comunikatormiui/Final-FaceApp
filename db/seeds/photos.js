@@ -9,6 +9,7 @@ exports.seed = function(knex, Promise) {
                                title: '100m dash - Bolt',
                                bucket_url: 'https://storage.googleapis.com/faceimages/@alex_1.jpg'}),
 
+
         knex('photos').insert({ id: 2,
                                user_id: 1,
                                title: 'Dog in Field',

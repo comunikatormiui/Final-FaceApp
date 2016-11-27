@@ -14,7 +14,8 @@ exports.up = function(knex, Promise) {
             table.integer('user_id');
             table.string('title');
             table.string('bucket_url');
-            table.timestamps();
+            table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
+            table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
         }),
 
         knex.schema.createTable('comments', function(table){

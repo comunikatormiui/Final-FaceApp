@@ -42,8 +42,7 @@ router.get('/', function(req, res, next) {
 
   router.post('/', function(req, res, next) {
     console.log("SendImagedata was clicked");
-
-    const current_user_id = 1 ;
+    const current_user_id = req.session.user_id ;
     const title = req.body.title;
     let current_username ;
     let image_name ;
@@ -52,15 +51,7 @@ router.get('/', function(req, res, next) {
     let total_photos;
 
 
-
-
-
-
-
-
-
-
-   knex('users').where({id:current_user_id}).then((results) =>{
+  knex('users').where({id:current_user_id}).then((results) =>{
       console.log(results[0].username);
       current_username = results[0].username;
 
@@ -142,32 +133,3 @@ router.get('/', function(req, res, next) {
 }
 
 
-
-
-
-
-
-
-  /*  knex('photos')
-    .insert({
-      user_id: current_user_id,
-      title: title,
-      bucket_url: bucket_url
-    })
-    .return({inserted: true})*/
-
-
-
-   /* knex.schema.createTable('photos', function(table){
-            table.increments('id').primary();
-            table.integer('user_id');
-            table.string('title');
-            table.string('bucket_url');
-            table.timestamps();
-        }),*/
-/*
-   knex('photos').insert({ id: 1,
-         user_id: 1,
-         title: '100m dash - Bolt',
-         bucket_url: 'https://storage.googleapis.com/faceimages/@alex_1.jpg'}),
-*/

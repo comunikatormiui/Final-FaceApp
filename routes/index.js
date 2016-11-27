@@ -51,20 +51,47 @@ module.exports = (knex) => {
     });
 
 
+    knex('users')
+.join('contacts', 'users.id', '=', 'contacts.user_id')
+.select('users.id', 'contacts.phone')
+
+
 
 
     get_bucket_promise.then(function(val) {
-       var self_links = [];
+       //let self_links = [];
 
-       val.forEach((photo) => {
+       knex('photos').join('users', 'photos.user_id','users.id').then((results)=>{
+
+         const sorted_images = results.sort(function(a, b){
+                let keyA = new Date(a.created_at),
+                    keyB = new Date(b.created_at);
+                // Compare the 2 dates
+                if(keyA > keyB) return -1;
+                if(keyA < keyB) return 1;
+                return 0;
+            });
+
+
+         console.log(results);
+
+
+
+
+
+
+
+
+
+     /*  val.forEach((photo) => {
         self_links.push(photo.name);
-      });
+      });*/
        res.render('index', {
-        data: self_links,
+        data: sorted_images,
         user: req.session.user_id
       });
 
-
+      })
       })
       .catch(function(err) {
         console.log('Failed to get Bucket items:', err);
