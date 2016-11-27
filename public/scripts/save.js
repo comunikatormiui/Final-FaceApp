@@ -13,11 +13,12 @@ $(document).ready(() => {
     };
 
 
-    function sendImageData(imageData){
+    function sendImageData(imageData,imageTitle){
         $.ajax({
             url: 'http://localhost:3000/images/new',
             type: 'POST',
-            data: {'imagedata64':imageData},
+            data: {'title':imageTitle,
+                   'imagedata64':imageData},
             processdata:false,
             success: function(){
             console.log('Image sent to Server :)');
@@ -38,9 +39,11 @@ $(document).ready(() => {
 
       document.getElementById('download').addEventListener('click', function() {
           console.log("clicked download");
+          let imagetitle = $("#image_title").val();
+
 
             //downloadCanvas(this, 'myCanvas', 'test.png');
-            sendImageData(getBase64Canvas());
+            sendImageData(getBase64Canvas(),imagetitle);
 
 
       }, false);

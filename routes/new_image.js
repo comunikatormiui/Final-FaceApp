@@ -35,18 +35,23 @@ module.exports = (knex) => {
     console.log("SendImagedata was clicked");
 
     const current_user_id = 1 ;
-    const title = "sample_title";
+    const title = req.body.title;
     let current_username ;
     let image_name ;
     let url ;
     let image_count ;
-    let total_photos
+    let total_photos;
 
 
 
 
 
-    knex('users').where({id:current_user_id}).then((results) =>{
+
+
+
+
+
+   knex('users').where({id:current_user_id}).then((results) =>{
       console.log(results[0].username);
       current_username = results[0].username;
 
