@@ -51,19 +51,11 @@ module.exports = (knex) => {
     });
 
 
-    knex('users')
-.join('contacts', 'users.id', '=', 'contacts.user_id')
-.select('users.id', 'contacts.phone')
-
-
-
-
     get_bucket_promise.then(function(val) {
-       //let self_links = [];
 
-       knex('photos').join('users', 'photos.user_id','users.id').then((results)=>{
+         knex.select('*').from('users').join('photos','users.id', 'photos.user_id').then((results)=>{
 
-         const sorted_images = results.sort(function(a, b){
+            const sorted_images = results.sort(function(a, b){
                 let keyA = new Date(a.created_at),
                     keyB = new Date(b.created_at);
                 // Compare the 2 dates
@@ -73,25 +65,39 @@ module.exports = (knex) => {
             });
 
 
-         console.log(results);
+           knex('likes').then((results)=>{
+
+
+              const like_count = (arr) => {
+              var likes = [];
+                arr.forEach((image)=>{
+
+                    var count = 0;
+                    results.forEach((like)=>{
+                      if(like.photo_id === image.id) {
+                        count ++ ;
+                      }
+                    });
+                     likes.push({photo_id:image.id,
+                                    likes:count});
+                })
+                return likes;
+              }
+
+              var likes_data = like_count(sorted_images);
 
 
 
 
 
+                 res.render('index', {
+                      data: {images:sorted_images,
+                              likes:likes_data},
+                      user: req.session.user_id
+                    });
+            });
+         });
 
-
-
-
-     /*  val.forEach((photo) => {
-        self_links.push(photo.name);
-      });*/
-       res.render('index', {
-        data: sorted_images,
-        user: req.session.user_id
-      });
-
-      })
       })
       .catch(function(err) {
         console.log('Failed to get Bucket items:', err);

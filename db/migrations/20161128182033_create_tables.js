@@ -23,7 +23,8 @@ exports.up = function(knex, Promise) {
             table.integer('user_id');
             table.integer('photo_id');
             table.string('content');
-            table.dateTime('postDate');
+            table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
+            table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
         }),
 
         knex.schema.createTable('likes', function(table){
