@@ -2,24 +2,49 @@
 <html>
   <head>
     <% include partials/_head %>
+    <link href="/stylesheets/home.css" rel="stylesheet">
   </head>
   <body>
-      <% include partials/_header %>
-
-
-      <h1>  <%= data[0].username %>'s Profile Page</h1>
-      <p> Images Created </p>
+  <% include partials/_nav %>
 
 
 
-           <div>
-          <% for(var i=0; i<data.length; i++) { %>
-          <div><p><%= data[i].title %></p>
-          <img src="<%= data[i].bucket_url %>"></div>
-          <% } %>
+
+       <div class="container">
+
+        <!-- Page Header -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header"><%= data[0].username %>'s Images
+                    <small></small>
+                </h1>
+            </div>
         </div>
 
 
+         <% var row_count = 0; var image_count = -3; %>
+          <%for(var j=row_count; j<3; j++) { %>
+          <div class="row">
+          <% var count = 0;
+             image_count +=3 %>
+          <% for(var i = image_count; i<data.length; i++) {
+            if (count < 3) { count+=1  %>
 
+            <div class="col-md-4 portfolio-item">
+                        <h3>
+                            <a href="/images/<%=data[i].id%>"><%=data[i].title%></a>
+                        </h3>
+                        <a href="/images/<%=data[i].id%>">
+                            <img class="img-responsive" src="<%=data[i].bucket_url%>" alt="No Image">
+                        </a>
+
+            </div>
+        <% }else{  }}%>
+      </div>
+        <% } %>
+
+
+    </div>
+    <% include partials/_footer.ejs %>
   </body>
 </html>

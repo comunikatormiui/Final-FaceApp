@@ -11,6 +11,9 @@
 
       <div class="container">
 
+
+      <% var image_data = data.images;
+         var like_data = data.likes %>
         <!-- Page Header -->
         <div class="row">
             <div class="col-lg-12">
@@ -26,17 +29,19 @@
           <div class="row">
           <% var count = 0;
              image_count +=3 %>
-          <% for(var i = image_count; i<data.length; i++) {
+          <% for(var i = image_count; i<image_data.length; i++) {
             if (count < 3) { count+=1  %>
 
             <div class="col-md-4 portfolio-item">
-                        <a href="/images/<%=data[i].id%>">
-                            <img class="img-responsive" src="<%=data[i].bucket_url%>" alt="No Image">
-                        </a>
                         <h3>
-                            <a href="#"><%=data[i].title%></a>
+                            <a href="/images/<%=image_data[i].id%>"><%=image_data[i].title%></a>
                         </h3>
-                        <p> Created by <a href="/users/<%=data[i].user_id%>"><%=data[i].username%><a></p>
+                        <div class='like'>LIKES: <%= like_data[i].likes %> </div>
+                        <p> Created by <a href="/users/<%=image_data[i].user_id%>"><%=image_data[i].username%><a></p>
+                        <a href="/images/<%=image_data[i].id%>">
+                            <img class="img-responsive" src="<%=image_data[i].bucket_url%>" alt="No Image">
+                        </a>
+
             </div>
         <% }else{  }}%>
       </div>
@@ -45,8 +50,7 @@
 
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <% include partials/_footer.ejs %>
 
 
 </html>
