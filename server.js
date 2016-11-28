@@ -24,6 +24,7 @@ const imagesRoutes = require('./routes/images');
 const registerRoutes  = require('./routes/register');
 const loginRoutes     = require('./routes/login');
 const logoutRoutes    = require('./routes/logout');
+const apiRoutes       = require('./routes/api')
 
 const app = express();
 
@@ -55,6 +56,7 @@ app.use('/images', imagesRoutes(knex));
 app.use('/register', registerRoutes(knex));
 app.use('/login', loginRoutes(knex));
 app.use('/logout', logoutRoutes(knex));
+app.use('/api', apiRoutes(knex));
 
 
 

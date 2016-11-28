@@ -9,39 +9,50 @@
     <div class="container">
       <div class="header clearfix">
         <ul class="nav nav-pills pull-right">
-          <li role="presentation"><button type="submit" class="btn btn-primary">Like</button> <%= likes %> likes</li>
+          <li role="presentation">
+            <% if (user) { %>
+              <button id="like" type="submit" class="btn btn-primary">Like</button>
+            <% } %>
+            <p id="likes"style="display: inline;"><%= likes %> likes</p>
+          </li>
         </ul>
         <h3 class="text-muted"><%= image[0].title %> By: <a><%= image[0].username %></a></h3>
       </div>
 
       <div class="jumbotron">
-        <img src='<%= image[0].image_url %>' />
+        <img id='<%= id %>' src='<%= image[0].image_url %>' />
       </div>
 
       <div class="header clearfix"></div>
 
-      <% for (var i = 0; i < comments.length; i++) { %>
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <a><strong><%= comments[i].username %></strong></a> <span class="text-muted">commented 5 days ago</span>
+      <h3 class="text-muted">Comments</a></h3>
+
+      <div class="commentList">
+        <% for (var i = 0; i < comments.length; i++) { %>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <a><strong><%= comments[i].username %></strong></a> <span class="text-muted">commented 5 days ago</span>
+            </div>
+            <div class="panel-body">
+              <%= comments[i].content %>
+            </div>
           </div>
-          <div class="panel-body">
-            <%= comments[i].content %>
+        <% } %>
+      </div>
+
+      <% if (user) { %>
+        <form id="comment">
+          <div class="form-group">
+            <label for="exampleTextarea">Add a comment</label>
+            <textarea class="form-control" id="commentTextarea" rows="3"></textarea>
           </div>
-        </div>
+          <button  type="submit" class="btn btn-primary">Comment</button>
+        </form>
       <% } %>
-
-
-      <form>
-        <div class="form-group">
-          <label for="exampleTextarea">Add a comment</label>
-          <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Comment</button>
-      </form>
 
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/scripts/single_image.js"></script>
   </body>
 </html>

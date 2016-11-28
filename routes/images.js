@@ -143,6 +143,7 @@ router.get('/new', function(req, res, next) {
         .where('likes.photo_id', req.params.imageid)
         .then((likes) => {
           res.render('single_image', {
+            id: req.params.imageid,
             user: req.session.user_id,
             image: image,
             comments: comments,
