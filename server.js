@@ -20,12 +20,10 @@ const morgan     = require('morgan');
 //require routes
 const index           = require('./routes/index');
 const usersRoutes     = require('./routes/users');
-const new_imageRoutes = require('./routes/new_image');
+const imagesRoutes = require('./routes/images');
 const registerRoutes  = require('./routes/register');
 const loginRoutes     = require('./routes/login');
 const logoutRoutes    = require('./routes/logout');
-
-
 
 const app = express();
 
@@ -53,11 +51,11 @@ app.use(flash())
 
 app.use('/', index(knex));
 app.use('/users', usersRoutes(knex));
+app.use('/images', imagesRoutes(knex));
 app.use('/register', registerRoutes(knex));
 app.use('/login', loginRoutes(knex));
 app.use('/logout', logoutRoutes(knex));
 
-app.use('/images/new', new_imageRoutes(knex));
 
 
 app.listen(3000, function () {
