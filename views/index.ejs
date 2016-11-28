@@ -2,22 +2,51 @@
 <html>
   <head>
     <% include partials/_head %>
+    <link href="/stylesheets/home.css" rel="stylesheet">
+
   </head>
   <body>
 
     <% include partials/_nav %>
-    
-    <h1> Home Page </h1>
-    <section>
-    <p> Images from all Users </p>
 
+      <div class="container">
 
-        <div>
-          <% for(var i=0; i<data.length; i++) { %>
-          <div><img src="https://storage.googleapis.com/faceimages/<%=data[i]%>"></div>
-          <% } %>
+        <!-- Page Header -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Home Page
+                    <small>All Images</small>
+                </h1>
+            </div>
         </div>
-      </section>
 
-  </body>
+
+         <% var row_count = 0; var image_count = -3; %>
+          <%for(var j=row_count; j<3; j++) { %>
+          <div class="row">
+          <% var count = 0;
+             image_count +=3 %>
+          <% for(var i = image_count; i<data.length; i++) {
+            if (count < 3) { count+=1  %>
+
+            <div class="col-md-4 portfolio-item">
+                        <a href="/images/<%=data[i].id%>">
+                            <img class="img-responsive" src="<%=data[i].bucket_url%>" alt="No Image">
+                        </a>
+                        <h3>
+                            <a href="#"><%=data[i].title%></a>
+                        </h3>
+                        <p> Created by <a href="/users/<%=data[i].user_id%>"><%=data[i].username%><a></p>
+            </div>
+        <% }else{  }}%>
+      </div>
+        <% } %>
+
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
 </html>

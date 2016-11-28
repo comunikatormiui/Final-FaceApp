@@ -37,8 +37,8 @@ app.set('view engine', 'ejs');
 app.use(morgan('dev'))
 app.use(knexLogger(knex));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit:'5mb'}));
+app.use(bodyParser.urlencoded({ extended: false, limit: '5mb' }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
@@ -48,12 +48,14 @@ app.use(session({
 app.use(flash())
 
 
+
 app.use('/', index(knex));
 app.use('/users', usersRoutes(knex));
 app.use('/images', imagesRoutes(knex));
 app.use('/register', registerRoutes(knex));
 app.use('/login', loginRoutes(knex));
 app.use('/logout', logoutRoutes(knex));
+
 
 
 app.listen(3000, function () {

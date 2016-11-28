@@ -10,6 +10,11 @@
 
     <div class="container theme-showcase" role="main">
 
+      <div class="jumbotron">
+        <h1>Create an Image</h1>
+        <p>This is a template showcasing the optional theme stylesheet included in Bootstrap. Use it as a starting point to create something more unique by building on or modifying it.</p>
+      </div>
+
       <div class="page-header">
         <h1>Upload Images</h1>
       </div>
@@ -21,6 +26,7 @@
 
       <img id="one">
       <img id="two">
+
 
       <div class="page-header"></div>
 
@@ -40,15 +46,18 @@
         </div>
       </div>
 
-      <div id="canvas">
-        <canvas id="myCanvas" width="0" height="0"></canvas>
+
+      <div>
+        <canvas id="myCanvas" class="img-thumbnail" width="15" height="15">please create canvas</canvas>
       </div>
+         <input id="image_title" type="text" placeholder="Image Title">
         <button id="create" type="button" class="btn btn-success">Create</button>
-        <button id="create" type="button" class="btn btn-primary">Post</button>
+        <a href="/" id="download">Download as image</a>
 
     </div> <!-- /container -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="/scripts/new_image.js"></script>
     <script type="text/javascript" src="/scripts/jquery.imgareaselect.pack.js"></script>
+    <script src="/scripts/save.js"></script>
   </body>
 </html>

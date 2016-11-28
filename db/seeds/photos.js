@@ -15,7 +15,7 @@ exports.seed = function(knex, Promise) {
         knex('photos').insert({user_id: 2,
                                title: 'Lebron Dunk!',
                                bucket_url: 'https://storage.googleapis.com/faceimages/@matt_1.jpg'}),
-                               
+
         knex('photos').insert({user_id: 2,
                                title: 'Obama is Chill',
                                bucket_url: 'https://storage.googleapis.com/faceimages/@matt_2.jpg'})
