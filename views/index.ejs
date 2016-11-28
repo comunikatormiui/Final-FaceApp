@@ -30,13 +30,14 @@
             if (count < 3) { count+=1  %>
 
             <div class="col-md-4 portfolio-item">
-                        <a href="/image/<%=data[i].id%>">
-                            <img class="img-responsive" src="<%=data[i].bucket_url%>" alt="No Image">
-                        </a>
                         <h3>
-                            <a href="#"><%=data[i].title%></a>
+                            <a href="/images/<%=data[i].id%>"><%=data[i].title%></a>
                         </h3>
                         <p> Created by <a href="/users/<%=data[i].user_id%>"><%=data[i].username%><a></p>
+                        <a href="/images/<%=data[i].id%>">
+                            <img class="img-responsive" src="<%=data[i].bucket_url%>" alt="No Image">
+                        </a>
+
             </div>
         <% }else{  }}%>
       </div>
@@ -45,8 +46,7 @@
 
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <% include partials/_footer.ejs %>
 
 
 </html>
