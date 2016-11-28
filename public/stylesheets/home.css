@@ -1,8 +1,4 @@
-/*!
- * Start Bootstrap - 3 Col Portfolio (http://startbootstrap.com/)
- * Copyright 2013-2016 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
- */
+
 
 body {
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
@@ -14,8 +10,13 @@ body {
 
 
 .like {
+position: absolute;
+right: 0;
+top: 0;
 
 }
+
+
 
 footer {
     margin: 50px 0;

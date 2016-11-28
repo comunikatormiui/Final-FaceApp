@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="full" lang="en">
   <head>
     <% include partials/_head %>
     <link href="/stylesheets/home.css" rel="stylesheet">
@@ -8,6 +8,7 @@
   <body>
 
     <% include partials/_nav %>
+
 
       <div class="container">
 
@@ -37,7 +38,8 @@
                             <a href="/images/<%=image_data[i].id%>"><%=image_data[i].title%></a>
                         </h3>
                         <div class='like'>LIKES: <%= like_data[i].likes %> </div>
-                        <p> Created by <a href="/users/<%=image_data[i].user_id%>"><%=image_data[i].username%><a></p>
+                        <div> Created by <a href="/users/<%=image_data[i].user_id%>"><%=image_data[i].username%><a></div>
+
                         <a href="/images/<%=image_data[i].id%>">
                             <img class="img-responsive" src="<%=image_data[i].bucket_url%>" alt="No Image">
                         </a>
