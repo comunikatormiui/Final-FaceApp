@@ -32,11 +32,20 @@ module.exports = (knex) => {
           })
           .return({inserted: true})
 
-          res.redirect('/')
+          knex('users')
+          .max('id')
+          .then((results) => {
+            req.session.user_id = results + 1;
+            res.redirect(`/users/${req.session.user_id}`)
+          })
+
         } else {
           req.flash('registerMessage', 'Email is invalid');
           return res.redirect('/register')
         }
+
+
+
       })
 
   })

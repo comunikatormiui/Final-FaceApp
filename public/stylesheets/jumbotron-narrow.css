@@ -96,3 +96,7 @@ body {
 textarea {
   resize: none;
 }
+
+#likes {
+  display: inline;
+}

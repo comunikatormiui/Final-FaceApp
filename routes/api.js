@@ -9,7 +9,7 @@ module.exports = (knex) => {
     knex('comments')
     .join('users', 'users.id', '=', 'comments.user_id')
     .join('photos', 'photos.id', '=', 'comments.photo_id')
-    .select('content', 'username', 'created_at')
+    .select('content', 'username', 'comments.created_at')
     .where('photo_id', req.params.imageid)
     .then((results) => {
       res.json(results)

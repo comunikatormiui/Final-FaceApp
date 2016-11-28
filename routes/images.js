@@ -128,13 +128,13 @@ router.get('/new', function(req, res, next) {
 
     knex('photos')
     .join('users', 'users.id', '=', 'photos.user_id')
-    .select('title', 'bucket_url as image_url', 'users.username as username')
+    .select('title', 'bucket_url as image_url', 'users.username as username', 'user_id')
     .where('photos.id', req.params.imageid)
     .then((image) => {
 
       knex('comments')
       .join('users', 'users.id', '=', 'comments.user_id')
-      .select('content', 'username')
+      .select('content', 'username', 'user_id')
       .where('comments.photo_id', req.params.imageid)
       .then((comments) => {
 
@@ -153,6 +153,15 @@ router.get('/new', function(req, res, next) {
       })
     })
   });
+
+  router.post('/:imageid/delete', function(req, res, next) {
+    knex('photos')
+    .where('id', req.params.imageid)
+    .del()
+    .return({inserted: true})
+
+    res.redirect(`/users/${req.session.user_id}`)
+  })
 
   return router;
 }
