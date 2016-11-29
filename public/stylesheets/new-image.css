@@ -23,3 +23,20 @@ body {
 #firstpreview, #secondpreview, .replace {
   display: inline-block;
 }
+
+canvas {
+  margin-bottom: 20px;
+}
+
+#image_title {
+  display: block;
+}
+
+#preview {
+  display: block;
+  padding: 0px;
+}
+
+img {
+  margin-bottom: 20px;
+}
