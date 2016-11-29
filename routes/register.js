@@ -7,10 +7,15 @@ const bcrypt = require('bcrypt-nodejs')
 module.exports = (knex) => {
 
   router.get('/', function(req, res, next) {
+
+    if(req.session.user_id){
+      res.redirect('/images');
+    }else {
     res.render('register', {
       user: req.session.user_id,
       message: req.flash('registerMessage')
     })
+  }
   })
 
   router.post('/', function(req, res, next) {

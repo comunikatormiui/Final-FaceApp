@@ -143,7 +143,7 @@ router.get('/new', function(req, res, next) {
 
       knex('comments')
       .join('users', 'users.id', '=', 'comments.user_id')
-      .select('content', 'username', 'user_id')
+      .select('content', 'username', 'user_id','comments.created_at')
       .where('comments.photo_id', req.params.imageid)
       .then((comments) => {
 
@@ -151,6 +151,15 @@ router.get('/new', function(req, res, next) {
         .count('likes.id')
         .where('likes.photo_id', req.params.imageid)
         .then((likes) => {
+
+
+          const timestamp = comments[0].created_at;
+
+          const dayswithdecimals = ((timestamp) / (1000 * 60 * 60 * 24)) % 7;
+          const days = Math.round((dayswithdecimals * 10) / 10);
+
+
+
           res.render('single_image', {
             id: req.params.imageid,
             user: req.session.user_id,

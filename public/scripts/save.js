@@ -7,6 +7,9 @@ $(document).ready(() => {
 
 
 
+
+
+
     function downloadCanvas(link, canvasId, filename) {
         link.href = document.getElementById(canvasId).toDataURL();
         link.download = filename;
@@ -31,19 +34,28 @@ $(document).ready(() => {
     function getBase64Canvas() {
         const dataURL = canvas.toDataURL("image/png");
         return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-        //return dataURL;
       }
 
 
 
 
       document.getElementById('download').addEventListener('click', function() {
-          console.log("clicked download");
-          let imagetitle = $("#image_title").val();
+            console.log("clicked download");
 
 
-            //downloadCanvas(this, 'myCanvas', 'test.png');
-            sendImageData(getBase64Canvas(),imagetitle);
+
+               if(false){
+                  alert('Input can not be left blank');
+               } else {
+                  let imagetitle = $("#image_title").val();
+                  //downloadCanvas(this, 'myCanvas', 'test.png');
+                  sendImageData(getBase64Canvas(),imagetitle);
+
+               };
+
+
+
+
 
 
       }, false);
