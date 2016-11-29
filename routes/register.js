@@ -22,6 +22,7 @@ module.exports = (knex) => {
       .select('*')
       .from('users')
       .where('email', email)
+      .orWhere('username', username)
       .then((results) => {
         if (!results[0]) {
           knex('users')
@@ -40,7 +41,11 @@ module.exports = (knex) => {
           })
 
         } else {
-          req.flash('registerMessage', 'Email is invalid');
+          if (results[0].username === username) {
+            req.flash('registerMessage', 'Username is already taken')
+          } else if (results[0].email === email) {
+            req.flash('registerMessage', 'Email is already taken')
+          };
           return res.redirect('/register')
         }
 

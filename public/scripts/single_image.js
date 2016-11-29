@@ -1,13 +1,13 @@
 'use strict';
 $(document).ready(() => {
+  const escape = (str) => {
+    const div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  }
+
   $('#comment').on('submit', (event) => {
     event.preventDefault()
-
-    const escape = (str) => {
-      const div = document.createElement('div');
-      div.appendChild(document.createTextNode(str));
-      return div.innerHTML;
-    }
 
     const id = $('.jumbotron img').attr('id')
 
@@ -22,15 +22,28 @@ $(document).ready(() => {
       url: `/api/images/${id}/comments`,
       success: (response) => {
         $('.commentList').html('')
+
         response.forEach((comment) => {
-          $('.commentList').append(`<div class="panel panel-default">
-                                      <div class="panel-heading">
-                                        <a><strong>${escape(comment.username)}</strong></a> <span class="text-muted">commented 5 days ago</span>
-                                      </div>
-                                      <div class="panel-body">
-                                        ${escape(comment.content)}
-                                      </div>
-                                    </div>`)
+          if ($('.container').attr('id') == comment.user_id) {
+            $('.commentList').append(`<div class="panel panel-default">
+                                        <div class="panel-heading">
+                                          <a href="/users/${comment.user_id}"><strong>${escape(comment.username)}</strong></a> <span class="text-muted">commented 5 days ago</span>
+                                          <button type="submit" class="btn btn-xs btn-danger remove-comment" id="${escape(comment.id)}">Remove</button>
+                                        </div>
+                                        <div class="panel-body">
+                                          ${escape(comment.content)}
+                                        </div>
+                                      </div>`)
+          } else {
+            $('.commentList').append(`<div class="panel panel-default">
+                                        <div class="panel-heading">
+                                          <a href="/users/${comment.user_id}"><strong>${escape(comment.username)}</strong></a> <span class="text-muted">commented 5 days ago</span>
+                                        </div>
+                                        <div class="panel-body">
+                                          ${escape(comment.content)}
+                                        </div>
+                                      </div>`)
+          }
         })
       }
     })
@@ -42,17 +55,81 @@ $(document).ready(() => {
 
     const id = $('.jumbotron img').attr('id')
 
+    if ($('#like').text() === "Like") {
+      $.ajax({
+        method: 'POST',
+        url: `/api/images/${id}/likes`
+      })
+
+      $.ajax({
+        method: 'GET',
+        url: `/api/images/${id}/likes`,
+        success: (response) => {
+          $('#likes').text('')
+          $('#likes').text(`${response.length} likes`)
+        }
+      })
+
+      $('#like').removeClass('btn-primary').addClass('btn-danger').text('Unlike')
+
+    } else if ($('#like').text() === "Unlike") {
+
+      $.ajax({
+        method: 'POST',
+        url: `/api/images/${id}/unlike`
+      })
+
+      $.ajax({
+        method: 'GET',
+        url: `/api/images/${id}/likes`,
+        success: (response) => {
+          $('#likes').text('')
+          $('#likes').text(`${response.length} likes`)
+        }
+      })
+
+      $('#like').removeClass('btn-danger').addClass('btn-primary').text('Like')
+
+    }
+  })
+
+  $('.commentList').on('click', '.remove-comment', (event) => {
+    const id = $('.jumbotron img').attr('id')
+
     $.ajax({
       method: 'POST',
-      url: `/api/images/${id}/likes`
+      url: `/api/images/${id}/uncomment`,
+      data: {commentid: event.target.id}
     })
 
     $.ajax({
       method: 'GET',
-      url: `/api/images/${id}/likes`,
+      url: `/api/images/${id}/comments`,
       success: (response) => {
-        $('#likes').text('')
-        $('#likes').text(`${response.length} likes`)
+        $('.commentList').html('')
+
+        response.forEach((comment) => {
+          if ($('.container').attr('id') == comment.user_id) {
+            $('.commentList').append(`<div class="panel panel-default">
+                                        <div class="panel-heading">
+                                          <a href="/users/${comment.user_id}"><strong>${escape(comment.username)}</strong></a> <span class="text-muted">commented 5 days ago</span>
+                                          <button type="submit" class="btn btn-xs btn-danger remove-comment" id="${escape(comment.id)}">Remove</button>
+                                        </div>
+                                        <div class="panel-body">
+                                          ${escape(comment.content)}
+                                        </div>
+                                      </div>`)
+          } else {
+            $('.commentList').append(`<div class="panel panel-default">
+                                        <div class="panel-heading">
+                                          <a href="/users/${comment.user_id}"><strong>${escape(comment.username)}</strong></a> <span class="text-muted">commented 5 days ago</span>
+                                        </div>
+                                        <div class="panel-body">
+                                          ${escape(comment.content)}
+                                        </div>
+                                      </div>`)
+          }
+        })
       }
     })
   })

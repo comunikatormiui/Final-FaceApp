@@ -36,7 +36,7 @@
               <h3>
                   <a href="/images/<%=image_data[i].id%>"><%=image_data[i].title%></a>
               </h3>
-              <div class='like'>LIKES: <%= like_data[i].likes %> </div>
+              <div class='like'><%= like_data[i].likes %> likes </div>
               <p> Created by <a href="/users/<%=image_data[i].user_id%>"><%=image_data[i].username%><a></p>
                 <a href="/images/<%=image_data[i].id%>">
                   <img class="img-responsive" src="<%=image_data[i].bucket_url%>" alt="No Image">

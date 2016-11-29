@@ -14,9 +14,14 @@ body {
 
 
 .like {
-
+  display: inline;
+  float: right;
 }
 
 footer {
     margin: 50px 0;
+}
+
+.col-md-4 h3 {
+  display: inline;
 }

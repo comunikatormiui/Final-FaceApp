@@ -134,20 +134,25 @@ router.get('/new', function(req, res, next) {
 
       knex('comments')
       .join('users', 'users.id', '=', 'comments.user_id')
-      .select('content', 'username', 'user_id')
+      .select('comments.id', 'content', 'username', 'user_id')
       .where('comments.photo_id', req.params.imageid)
       .then((comments) => {
 
         knex('likes')
-        .count('likes.id')
         .where('likes.photo_id', req.params.imageid)
+        .select('user_id')
         .then((likes) => {
+          const likesArr = [];
+          likes.forEach((like) => {
+            likesArr.push(like.user_id)
+          })
+
           res.render('single_image', {
             id: req.params.imageid,
             user: req.session.user_id,
             image: image,
             comments: comments,
-            likes: likes[0].count
+            likes: likesArr
           });
         })
       })
@@ -157,6 +162,11 @@ router.get('/new', function(req, res, next) {
   router.post('/:imageid/delete', function(req, res, next) {
     knex('photos')
     .where('id', req.params.imageid)
+    .del()
+    .return({inserted: true})
+
+    knex('comments')
+    .where('photo_id', req.params.imageid)
     .del()
     .return({inserted: true})
 

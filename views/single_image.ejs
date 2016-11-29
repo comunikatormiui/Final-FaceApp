@@ -6,14 +6,19 @@
   </head>
   <body>
     <% include partials/_nav %>
-    <div class="container">
+    <div class="container" id="<%= user %>">
       <div class="header clearfix">
         <ul class="nav nav-pills pull-right">
           <li role="presentation">
             <% if (user) { %>
-              <button id="like" type="submit" class="btn btn-primary">Like</button>
+
+              <% if (likes.includes(user)) { %>
+                <button id="like" type="submit" class="btn btn-danger">Unlike</button>
+              <% } else { %>
+                <button id="like" type="submit" class="btn btn-primary">Like</button>
+              <% } %>
             <% } %>
-            <p id="likes"><%= likes %> likes</p>
+            <p id="likes"><%= likes.length %> likes</p>
           </li>
         </ul>
         <h3 class="text-muted"><%= image[0].title %> By: <a href="/users/<%= image[0].user_id %>"><%= image[0].username %></a></h3>
@@ -32,10 +37,14 @@
           <div class="panel panel-default">
             <div class="panel-heading">
               <a href='/users/<%= comments[i].user_id %>'><strong><%= comments[i].username %></strong></a> <span class="text-muted">commented 5 days ago</span>
+              <% if (comments[i].user_id === user) { %>
+                <button type="submit" class="btn btn-xs btn-danger remove-comment" id="<%= comments[i].id %>">Remove</button>
+              <% } %>
             </div>
             <div class="panel-body">
               <%= comments[i].content %>
             </div>
+
           </div>
         <% } %>
       </div>
@@ -52,7 +61,7 @@
 
       <% if (user === image[0].user_id) { %>
         <form method="POST" action="/images/<%= id %>/delete">
-          <button  type="submit" class="btn btn-danger">Delete</button>
+          <button id="deleteimg" type="submit" class="btn btn-danger">Delete Image</button>
         </form>
       <% } %>
 
