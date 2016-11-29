@@ -25,6 +25,7 @@ const storage = google.storage('v1');
 
 module.exports = (knex) => {
 
+
 router.get('/new', function(req, res, next) {
   const user = req.session.user_id
   if (user) {
@@ -123,6 +124,14 @@ router.get('/new', function(req, res, next) {
       })
     });
   });
+
+
+    router.get('/loading', function(req, res, next){
+    setTimeout(function(){
+        res.redirect('/images');
+     }, 5000);
+  })
+
 
   router.get('/:imageid', function(req, res, next) {
 

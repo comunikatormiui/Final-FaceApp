@@ -12,8 +12,16 @@ const storage = google.storage('v1');
 /* GET home page. */
 module.exports = (knex) => {
 
+  router.get('/', function(req, res, next){
+    res.render('welcome',{user: req.session.user_id});
 
-  router.get('/', function(req, res, next) {
+  })
+
+
+
+
+
+  router.get('/images', function(req, res, next) {
 
     const get_bucket_promise = new Promise(function(resolve, reject) {
       google.auth.getApplicationDefault(function(err, authClient) {

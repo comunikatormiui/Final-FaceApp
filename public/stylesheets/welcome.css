@@ -1,0 +1,14 @@
+body {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    background: none;
+    color:white;
+}
+
+.full {
+  background: url(https://s16.postimg.org/hr9qfjnjp/download.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
