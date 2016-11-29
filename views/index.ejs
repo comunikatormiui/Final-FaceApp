@@ -26,7 +26,7 @@
 
 
          <% var row_count = 0; var image_count = -3; %>
-          <%for(var j=row_count; j<3; j++) { %>
+          <%for(var j=row_count; j<image_data.length; j++) { %>
           <div class="row">
           <% var count = 0;
              image_count +=3 %>
@@ -42,6 +42,7 @@
                 <a href="/images/<%=image_data[i].id%>">
                   <img class="img-responsive" src="<%=image_data[i].bucket_url%>" alt="No Image">
                 </a>
+
             </div>
         <% }else{  }}%>
       </div>

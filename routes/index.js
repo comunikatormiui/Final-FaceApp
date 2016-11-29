@@ -13,7 +13,11 @@ const storage = google.storage('v1');
 module.exports = (knex) => {
 
   router.get('/', function(req, res, next){
+     if(req.session.user_id){
+      res.redirect('/images');
+    }else {
     res.render('welcome',{user: req.session.user_id});
+  }
 
   })
 
