@@ -21,10 +21,6 @@ module.exports = (knex) => {
 
   })
 
-
-
-
-
   router.get('/images', function(req, res, next) {
 
     const get_bucket_promise = new Promise(function(resolve, reject) {
@@ -97,10 +93,6 @@ module.exports = (knex) => {
               }
 
               var likes_data = like_count(sorted_images);
-
-
-
-
 
                  res.render('index', {
                       data: {images:sorted_images,

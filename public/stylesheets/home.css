@@ -13,13 +13,42 @@ body {
   top: 0;
 }
 
-
-
-
 footer {
     margin: 50px 0;
 }
 
 .col-md-4 h3 {
   display: inline;
+}
+
+.col-md-4 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-left: 0.5%;
+  margin-right: 0.5%;
+  border: 0.5px solid grey;
+  width: 32%;
+}
+
+.control {
+  height: 28rem;
+  position: relative;
+}
+
+.col-md-4:hover {
+  border: solid 0.5px black;
+}
+
+img {
+  max-height: 100%;
+  margin: 0 auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.like {
+  margin-right: 15px;
+  margin-top: 15px;
 }

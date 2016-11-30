@@ -54,8 +54,8 @@ router.get('/new', function(req, res, next) {
         console.log(results[0].username);
         current_username = results[0].username;
 
-      knex('photos').count('user_id').where({user_id:current_user_id}).then((results)=>{
-        let image_int = +results[0].count + 1;
+      knex('photos').max('id').where({user_id:current_user_id}).then((results)=>{
+        let image_int = +results[0].max + 1;
         image_count = image_int.toString()
         console.log(image_count);
 
@@ -143,7 +143,7 @@ router.get('/new', function(req, res, next) {
 
       knex('comments')
       .join('users', 'users.id', '=', 'comments.user_id')
-      .select('content', 'username', 'user_id','comments.created_at')
+      .select('content', 'username', 'user_id')
       .where('comments.photo_id', req.params.imageid)
       .then((comments) => {
 
@@ -156,14 +156,6 @@ router.get('/new', function(req, res, next) {
           likes.forEach((like) => {
             likesArr.push(like.user_id)
           })
-
-
-
-          const timestamp = comments[0].created_at;
-
-          const dayswithdecimals = ((timestamp) / (1000 * 60 * 60 * 24)) % 7;
-          const days = Math.round((dayswithdecimals * 10) / 10);
-
 
 
           res.render('single_image', {

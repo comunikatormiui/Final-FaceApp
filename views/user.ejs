@@ -27,14 +27,18 @@
           <% for(var i = image_count; i<data.length; i++) {
             if (count < 3) { count+=1  %>
 
-            <div class="col-md-4 portfolio-item">
-              <h3>
-                  <a href="/images/<%=data[i].id%>"><%=data[i].title%></a>
-              </h3>
-              <a href="/images/<%=data[i].id%>">
-                  <img class="img-responsive" src="<%=data[i].bucket_url%>" alt="No Image">
-              </a>
-            </div>
+              <div class="col-md-4 portfolio-item">
+                <h3>
+                    <a href="/images/<%=data[i].id%>"><%=data[i].title%></a>
+                </h3>
+                
+                  <div class="control">
+                  <a href="/images/<%=data[i].id%>">
+                    <img class="img-responsive" src="<%=data[i].bucket_url%>" alt="No Image">
+                  </a>
+                </div>
+
+              </div>
         <% }else{  }}%>
       </div>
         <% } } else { %>

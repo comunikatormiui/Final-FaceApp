@@ -36,7 +36,7 @@
         <% for (var i = 0; i < comments.length; i++) { %>
           <div class="panel panel-default">
             <div class="panel-heading">
-              <a href='/users/<%= comments[i].user_id %>'><strong><%= comments[i].username %></strong></a> <span class="text-muted">commented 5 days ago</span>
+              <a href='/users/<%= comments[i].user_id %>'><strong><%= comments[i].username %></strong></a>
               <% if (comments[i].user_id === user) { %>
                 <button type="submit" class="btn btn-xs btn-danger remove-comment" id="<%= comments[i].id %>">Remove</button>
               <% } %>

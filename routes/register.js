@@ -41,7 +41,8 @@ module.exports = (knex) => {
           knex('users')
           .max('id')
           .then((results) => {
-            req.session.user_id = results + 1;
+            console.log(results)
+            req.session.user_id = results[0].max + 1;
             res.redirect(`/users/${req.session.user_id}`)
           })
 

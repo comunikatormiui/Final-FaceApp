@@ -39,9 +39,11 @@
               </h3>
               <div class='like'><%= like_data[i].likes %> likes </div>
               <p> Created by <a href="/users/<%=image_data[i].user_id%>"><%=image_data[i].username%><a></p>
+                <div class="control">
                 <a href="/images/<%=image_data[i].id%>">
                   <img class="img-responsive" src="<%=image_data[i].bucket_url%>" alt="No Image">
                 </a>
+              </div>
 
             </div>
         <% }else{  }}%>

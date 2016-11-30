@@ -27,7 +27,7 @@ $(document).ready(() => {
           if ($('.container').attr('id') == comment.user_id) {
             $('.commentList').append(`<div class="panel panel-default">
                                         <div class="panel-heading">
-                                          <a href="/users/${comment.user_id}"><strong>${escape(comment.username)}</strong></a> <span class="text-muted">commented 5 days ago</span>
+                                          <a href="/users/${comment.user_id}"><strong>${escape(comment.username)}</strong></a>
                                           <button type="submit" class="btn btn-xs btn-danger remove-comment" id="${escape(comment.id)}">Remove</button>
                                         </div>
                                         <div class="panel-body">
@@ -37,7 +37,7 @@ $(document).ready(() => {
           } else {
             $('.commentList').append(`<div class="panel panel-default">
                                         <div class="panel-heading">
-                                          <a href="/users/${comment.user_id}"><strong>${escape(comment.username)}</strong></a> <span class="text-muted">commented 5 days ago</span>
+                                          <a href="/users/${comment.user_id}"><strong>${escape(comment.username)}</strong></a>
                                         </div>
                                         <div class="panel-body">
                                           ${escape(comment.content)}
@@ -112,7 +112,7 @@ $(document).ready(() => {
           if ($('.container').attr('id') == comment.user_id) {
             $('.commentList').append(`<div class="panel panel-default">
                                         <div class="panel-heading">
-                                          <a href="/users/${comment.user_id}"><strong>${escape(comment.username)}</strong></a> <span class="text-muted">commented 5 days ago</span>
+                                          <a href="/users/${comment.user_id}"><strong>${escape(comment.username)}</strong></a>
                                           <button type="submit" class="btn btn-xs btn-danger remove-comment" id="${escape(comment.id)}">Remove</button>
                                         </div>
                                         <div class="panel-body">
@@ -122,7 +122,7 @@ $(document).ready(() => {
           } else {
             $('.commentList').append(`<div class="panel panel-default">
                                         <div class="panel-heading">
-                                          <a href="/users/${comment.user_id}"><strong>${escape(comment.username)}</strong></a> <span class="text-muted">commented 5 days ago</span>
+                                          <a href="/users/${comment.user_id}"><strong>${escape(comment.username)}</strong></a>
                                         </div>
                                         <div class="panel-body">
                                           ${escape(comment.content)}
