@@ -2,6 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
+const uuid = require('node-uuid');
 const fs = require('fs');
 const gcloud = require('google-cloud')
 const gstorage = gcloud.storage;
@@ -54,16 +55,15 @@ router.get('/new', function(req, res, next) {
         console.log(results[0].username);
         current_username = results[0].username;
 
-      knex('photos').max('id').where({user_id:current_user_id}).then((results)=>{
-        let image_int = +results[0].max + 1;
+      knex('photos').count('user_id').where({user_id:current_user_id}).then((results)=>{
+        let image_int = +results[0].count + 1;
         image_count = image_int.toString()
-        console.log(image_count);
 
-        image_name = `${current_username}_${image_count}.jpg`;
+        image_name = `${current_username}_${uuid.v4()}.jpg`;
         url =`https://storage.googleapis.com/faceimages/${image_name}`;
 
-        knex('photos').count('id').then((results)=>{
-          total_photos = +results[0].count +1 ;
+        knex('photos').max('id').then((results)=>{
+          total_photos = +results[0].max +1 ;
 
           knex('photos').insert({
               id: total_photos,
@@ -76,7 +76,6 @@ router.get('/new', function(req, res, next) {
             var b64string = req.body.imagedata64;
             var buf = Buffer.from(b64string, 'base64'); // Ta-da
 
-
             google.auth.getApplicationDefault(function(err, authClient) {
               if (err) {
                 console.log('Authentication failed because of ', err);
@@ -86,7 +85,6 @@ router.get('/new', function(req, res, next) {
                 var scopes = ['https://www.googleapis.com/auth/cloud-platform'];
                 authClient = authClient.createScoped(scopes);
               }
-
 
               var request = {
                 bucket: "faceimages",
@@ -98,7 +96,6 @@ router.get('/new', function(req, res, next) {
                 },
 
                 media: {
-                  // See https://github.com/google/google-api-nodejs-client#media-uploads
                   mimeType: 'image/jpg',
                   body: buf,
                   base64encode: true
@@ -124,7 +121,6 @@ router.get('/new', function(req, res, next) {
       })
     });
   });
-
 
     router.get('/loading', function(req, res, next){
     setTimeout(function(){
@@ -156,7 +152,6 @@ router.get('/new', function(req, res, next) {
           likes.forEach((like) => {
             likesArr.push(like.user_id)
           })
-
 
           res.render('single_image', {
             id: req.params.imageid,
