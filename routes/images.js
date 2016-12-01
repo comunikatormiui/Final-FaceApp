@@ -139,7 +139,7 @@ router.get('/new', function(req, res, next) {
 
       knex('comments')
       .join('users', 'users.id', '=', 'comments.user_id')
-      .select('content', 'username', 'user_id')
+      .select('comments.id', 'content', 'username', 'user_id')
       .where('comments.photo_id', req.params.imageid)
       .then((comments) => {
 
