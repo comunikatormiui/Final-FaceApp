@@ -176,6 +176,11 @@ router.get('/new', function(req, res, next) {
     .del()
     .return({inserted: true})
 
+    knex('likes')
+    .where('photo_id', req.params.imageid)
+    .del()
+    .return({inserted: true})
+
     res.redirect(`/users/${req.session.user_id}`)
   })
 
