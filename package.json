@@ -30,7 +30,7 @@
     "knex-logger": "^0.1.0",
     "morgan": "^1.7.0",
     "node-uuid": "^1.4.7",
-    "nodemon": "^1.11.0",
+    "nodemon": "^2.0.17",
     "pg": "^6.1.0",
     "serve-favicon": "~2.3.0"
   }
